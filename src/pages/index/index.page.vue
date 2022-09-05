@@ -1,41 +1,25 @@
 <script setup lang="ts">
-import { useHead } from '@vueuse/head';
-import PageLink from '@/components/layout/PageLink.vue';
-import CounterWidget from '@/components/CounterWidget.vue';
 import GenericButton from '@/components/GenericButton.vue';
 
-const props = defineProps<{
-  health: string,
-}>();
-
-useHead({
-  title: 'index',
-});
-
-const asdf = () => {
-  console.log('ASDF');
+const start = () => {
+  console.log('Starting...');
 };
 </script>
 
 <template>
-  {{ props.health }}
-  <PageLink href="/">
-    Index
-  </PageLink>
-  <PageLink href="/about">
-    About
-  </PageLink>
-  <GenericButton
-    full-width
-    type="secondary"
-    @click="asdf"
-  >
-    Empezar
-  </GenericButton>
-  <h1>Welcome</h1>
-  This page is:
-  <ul>
-    <li>Rendered to HTML.</li>
-    <li>Interactive. <CounterWidget /></li>
-  </ul>
+  <div class="w-full">
+    <div class="max-w-md mx-auto flex flex-col items-center mt-12">
+      <h1 class="text-6xl font-bold text-gray-900 mb-12">
+        ⚡ Slach ⚡
+      </h1>
+      <h3 class="text-2xl text-gray-800 text-center mb-12">
+        Al registrarte obtendrás un
+        <span class="font-bold">link único que te servirá para recibir pagos</span>
+        de quién quieras.
+      </h3>
+      <GenericButton @click="start">
+        Empezar
+      </GenericButton>
+    </div>
+  </div>
 </template>
