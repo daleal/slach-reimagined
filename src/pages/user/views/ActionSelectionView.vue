@@ -20,7 +20,7 @@ const selectOption = (isPayerNewValue: boolean) => {
 };
 
 const selectAction = () => {
-  const state: SecondStateType = isPayer.value ? 'payer' : 'owner';
+  const state: SecondStateType = isPayer.value ? 'payer-amount-selection' : 'owner-amount-selection';
   emit('continue', state);
 };
 

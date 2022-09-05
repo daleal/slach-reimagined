@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import GenericContainer from '@/components/layout/GenericContainer.vue';
 import GenericFooter from '@/components/layout/GenericFooter.vue';
 import ActionSelectionView from '@/pages/user/views/ActionSelectionView.vue';
+import OwnerAmountSelectionView from '@/pages/user/views/owner/AmountSelectionView.vue';
+import OwnerFinalView from '@/pages/user/views/owner/FinalView.vue';
 
 import type { User } from '@/types/user';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -24,6 +26,13 @@ const moveToState = (newState: StateType) => {
         v-if="state === 'action-selection'"
         :user="props.user"
         @continue="(newState: SecondStateType) => moveToState(newState)"
+      />
+      <OwnerAmountSelectionView
+        v-else-if="state === 'owner-amount-selection'"
+        @continue="() => moveToState('owner-final')"
+      />
+      <OwnerFinalView
+        v-else-if="state === 'owner-final'"
       />
     </template>
     <template #footer>
