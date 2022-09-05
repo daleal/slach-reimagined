@@ -26,6 +26,15 @@ const defaultHead = {
 };
 
 export const render = async (pageContext: PageContext) => {
+  const { redirectTo } = pageContext;
+  if (redirectTo) {
+    return {
+      pageContext: {
+        redirectTo,
+      },
+    };
+  }
+
   const application = createApp(pageContext);
   const head = createHead(defaultHead);
 

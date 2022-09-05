@@ -1,12 +1,32 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { usePageContext } from '@/composables/pageContext';
+import { ref } from 'vue';
+import GenericContainer from '@/components/layout/GenericContainer.vue';
+import GenericFooter from '@/components/layout/GenericFooter.vue';
+import ActionSelectionView from '@/pages/user/views/ActionSelectionView.vue';
 
-const { pageContext } = usePageContext();
+import type { User } from '@/types/user';
+import type { StateType, SecondStateType } from '@/types/views/user';
 
-const alias = computed(() => pageContext.routeParams.alias);
+const props = defineProps<{ user: User }>();
+
+const state = ref<StateType>('action-selection');
+
+const moveToState = (newState: StateType) => {
+  state.value = newState;
+};
 </script>
 
 <template>
-  User Alias: {{ alias }}
+  <GenericContainer>
+    <template #body>
+      <ActionSelectionView
+        v-if="state === 'action-selection'"
+        :user="props.user"
+        @continue="(newState: SecondStateType) => moveToState(newState)"
+      />
+    </template>
+    <template #footer>
+      <GenericFooter />
+    </template>
+  </GenericContainer>
 </template>
