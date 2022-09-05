@@ -1,6 +1,5 @@
 import { renderToString } from '@vue/server-renderer';
 import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr';
-import type { PageContextBuiltIn } from 'vite-plugin-ssr';
 import { createHead, renderHeadToString } from '@vueuse/head';
 
 import { createApp } from './main';
@@ -26,7 +25,7 @@ const defaultHead = {
   ],
 };
 
-export const render = async (pageContext: PageContextBuiltIn & PageContext) => {
+export const render = async (pageContext: PageContext) => {
   const application = createApp(pageContext);
   const head = createHead(defaultHead);
 
