@@ -3,7 +3,7 @@ import GenericButton from '@/components/GenericButton.vue';
 import FrequentlyAskedQuestions from '@/components/FrequentlyAskedQuestions.vue';
 
 const start = () => {
-  console.log('Starting...');
+  window.location.href = '/accounts';
 };
 </script>
 
