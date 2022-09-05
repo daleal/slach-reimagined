@@ -39,7 +39,7 @@ const goToHome = () => {
       @select="() => selectOption(true)"
     >
       <template #icon>
-        <FontAwesomeIcon :icon="[ 'fab', 'twitter' ]" />
+        <FontAwesomeIcon :icon="[ 'fas', 'user' ]" />
       </template>
       <template #title>
         Pagar
@@ -53,7 +53,7 @@ const goToHome = () => {
       @select="() => selectOption(false)"
     >
       <template #icon>
-        <FontAwesomeIcon :icon="[ 'fab', 'twitter' ]" />
+        <FontAwesomeIcon :icon="[ 'fas', 'hand-holding-dollar' ]" />
       </template>
       <template #title>
         Cobrar
