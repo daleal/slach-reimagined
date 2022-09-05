@@ -33,7 +33,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
             href="https://www.twitter.com/CGriffero"
             target="_blank"
             class="text-indigo-700 cursor-pointer font-bold"
-          > Escríbeme <FontAwesomeIcon :icon="[ 'fab', 'twitter' ]" /></a>
+          >Escríbeme <FontAwesomeIcon :icon="[ 'fab', 'twitter' ]" /></a>
         </p>
       </div>
     </div>

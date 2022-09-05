@@ -5,6 +5,7 @@ import GenericFooter from '@/components/layout/GenericFooter.vue';
 import ActionSelectionView from '@/pages/user/views/ActionSelectionView.vue';
 
 import type { User } from '@/types/user';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { StateType, SecondStateType } from '@/types/views/user';
 
 const props = defineProps<{ user: User }>();
