@@ -46,6 +46,7 @@
     "eslint-plugin-vue": "^9.4.0",
     "humps": "^2.0.1",
     "postcss": "^8.4.16",
+    "qrcode.vue": "^3.3.3",
     "tailwindcss": "^3.1.8",
     "vee-validate": "^4.6.7",
     "vue-tsc": "^0.39.5"
