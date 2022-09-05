@@ -34,22 +34,22 @@ const select = () => {
     <span
       aria-hidden="true"
       class="
-        absolute inset-0 border-2 border-green-500
-        bg-green-200 bg-opacity-10 rounded-lg
+        absolute inset-0 border-2 border-emerald-500
+        bg-emerald-200 bg-opacity-10 rounded-lg
       "
       :class="{ hidden: !selected }"
     >
       <span
         class="
           absolute top-4 right-4 h-6 w-6 inline-flex items-center
-          justify-center rounded-full bg-green-200
+          justify-center rounded-full bg-emerald-200
         "
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"
-          class="h-5 w-5 text-green-600"
+          class="h-5 w-5 text-emerald-600"
         >
           <path
             fill-rule="evenodd"
