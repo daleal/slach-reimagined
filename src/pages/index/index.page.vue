@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import GenericButton from '@/components/GenericButton.vue';
+import FrequentlyAskedQuestions from '@/components/FrequentlyAskedQuestions.vue';
 
 const start = () => {
   console.log('Starting...');
@@ -7,8 +8,8 @@ const start = () => {
 </script>
 
 <template>
-  <div class="w-full">
-    <div class="max-w-md mx-auto flex flex-col items-center mt-12">
+  <div class="w-screen h-screen flex flex-col justify-between">
+    <div class="max-w-md mx-auto flex flex-col items-center py-12">
       <h1 class="text-6xl font-bold text-gray-900 mb-12">
         ⚡ Slach ⚡
       </h1>
@@ -21,5 +22,6 @@ const start = () => {
         Empezar
       </GenericButton>
     </div>
+    <FrequentlyAskedQuestions />
   </div>
 </template>

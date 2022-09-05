@@ -1,10 +1,17 @@
 import { createSSRApp, defineComponent, h } from 'vue';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { setPageContext } from '../src/composables/pageContext';
 
 import type { PageContext } from '../src/types/renderer/page';
 
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import '../src/assets/styles/main.css';
+
 export const createApp = (pageContext: PageContext) => {
   const { Page, pageProps } = pageContext;
+
+  library.add(faTwitter);
 
   const ApplicationComponent = defineComponent({
     render() {
