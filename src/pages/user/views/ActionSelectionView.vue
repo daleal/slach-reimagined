@@ -65,16 +65,16 @@ const goToHome = () => {
     </SquareSelector>
   </div>
   <GenericButton
-    full-width
     :disabled="!optionSelected"
     class="mb-16"
+    full-width
     @click="selectAction"
   >
     Continuar
   </GenericButton>
   <GenericButton
-    full-width
     type="secondary"
+    full-width
     @click="goToHome"
   >
     ¿Todavía no tienes <span class="font-bold">Slach</span>? Créalo acá

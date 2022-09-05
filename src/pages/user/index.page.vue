@@ -5,6 +5,8 @@ import GenericFooter from '@/components/layout/GenericFooter.vue';
 import ActionSelectionView from '@/pages/user/views/ActionSelectionView.vue';
 import OwnerAmountSelectionView from '@/pages/user/views/owner/AmountSelectionView.vue';
 import OwnerFinalView from '@/pages/user/views/owner/FinalView.vue';
+import PayerAmountSelectionView from '@/pages/user/views/payer/AmountSelectionView.vue';
+import PayerFinalView from '@/pages/user/views/payer/FinalView.vue';
 
 import type { User } from '@/types/user';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,6 +35,15 @@ const moveToState = (newState: StateType) => {
       />
       <OwnerFinalView
         v-else-if="state === 'owner-final'"
+      />
+      <PayerAmountSelectionView
+        v-else-if="state === 'payer-amount-selection'"
+        :user="props.user"
+        @continue="() => moveToState('payer-final')"
+      />
+      <PayerFinalView
+        v-else-if="state === 'payer-final'"
+        :user="props.user"
       />
     </template>
     <template #footer>
