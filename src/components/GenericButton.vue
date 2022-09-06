@@ -30,7 +30,7 @@ const onClick = () => {
 <template>
   <button
     :class="`
-      px-10 py-2 rounded-full font-medium select-none text-center
+      px-10 py-3 rounded-full font-medium select-none text-center
       disabled:cursor-not-allowed
       ${widthClasses} ${colorClasses}
     `"
