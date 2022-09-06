@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { useAccountInfo } from '@/composables/accountInfo';
 import GenericButton from '@/components/GenericButton.vue';
@@ -9,16 +9,19 @@ const emit = defineEmits<{ (e: 'continue'): void }>();
 
 const { accountType } = useAccountInfo();
 
-const isIndividual = ref(true);
+const isIndividual = ref(accountType.value === 'individual');
 
 const selectOption = (isIndividualNewValue: boolean) => {
   isIndividual.value = isIndividualNewValue;
 };
 
 const selectAction = () => {
-  accountType.value = isIndividual.value ? 'individual' : 'business';
   emit('continue');
 };
+
+watch([isIndividual], () => {
+  accountType.value = isIndividual.value ? 'individual' : 'business';
+});
 </script>
 
 <template>

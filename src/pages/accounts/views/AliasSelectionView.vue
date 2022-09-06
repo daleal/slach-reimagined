@@ -2,6 +2,7 @@
 import { computed, ref, watch } from 'vue';
 import { useField } from 'vee-validate';
 import { useAccountInfo } from '@/composables/accountInfo';
+import { trimFormatter } from '@/utils/formatters';
 import { validateNonEmpty, validateMinimumCharacterAmount, validateUnusedAlias } from '@/utils/validations';
 import GenericButton from '@/components/GenericButton.vue';
 import GenericInput from '@/components/GenericInput.vue';
@@ -17,14 +18,14 @@ const { value: possibleAlias, errorMessage, meta } = useField('alias', [
   validateMinimumCharacterAmount(3, 'Este campo debe tener al menos 3 caracteres'),
   validateUnusedAlias('Este usuario ya está tomado 😱'),
 ], {
-  initialValue: '',
+  initialValue: alias.value,
+  validateOnMount: alias.value !== '',
 });
 
-const written = ref(false);
+const written = ref(alias.value !== '');
 const valid = computed(() => written.value && !meta.pending && meta.valid);
 
 const continueAction = () => {
-  alias.value = possibleAlias.value;
   emit('continue');
 };
 
@@ -34,6 +35,7 @@ const back = () => {
 
 watch([possibleAlias], () => {
   written.value = true;
+  alias.value = possibleAlias.value;
 });
 </script>
 
@@ -57,6 +59,7 @@ watch([possibleAlias], () => {
     placeholder="Usuario"
     :error="errorMessage"
     :loading="meta.pending"
+    :formatter="trimFormatter"
   />
 
   <div class="w-full flex justify-center mb-6">

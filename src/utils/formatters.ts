@@ -1,7 +1,3 @@
-export const onlyNumbersFormatter = (value: string) => {
-  if (!value) {
-    return '';
-  }
+export const onlyNumbersFormatter = (value: string) => value.replace(/[^0-9]/g, '');
 
-  return value.replace(/[^0-9]/g, '');
-};
+export const trimFormatter = (value: string) => value.trim();
