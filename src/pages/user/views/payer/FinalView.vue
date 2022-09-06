@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useAmount } from '@/composables/amount';
 import GenericButton from '@/components/GenericButton.vue';
+import UserDataTable from '@/components/user-data/DataTable.vue';
 
 import type { User } from '@/types/user';
 
@@ -9,12 +10,18 @@ const props = defineProps<{ user: User }>();
 
 const { amount } = useAmount();
 
+const showUserData = ref(false);
+
 const formattedAmount = computed(() => {
   if (amount.value === null) {
     return '';
   }
   return Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(Number(amount.value));
 });
+
+const toggleUserData = () => {
+  showUserData.value = !showUserData.value;
+};
 
 const goToHome = () => {
   window.location.href = '/';
@@ -30,7 +37,7 @@ const goToHome = () => {
     ¿Cómo le quieres pagar?
   </p>
   <GenericButton
-    class="mb-4"
+    class="mb-2 md:mb-4"
     full-width
   >
     Pagar sin salir de Slach 📲
@@ -39,15 +46,25 @@ const goToHome = () => {
     Entra a tu cuenta del banco desde acá y transfiere en segundos
   </p>
   <GenericButton
-    class="mb-4"
+    class="mb-2 md:mb-4"
     full-width
+    @click="toggleUserData"
   >
     Ver datos para pagar manualmente 🏦
   </GenericButton>
-  <p class="text-center text-sm select-none text-gray-600 mb-16">
+  <p
+    v-if="!showUserData"
+    class="text-center text-sm select-none text-gray-600"
+  >
     Te mostramos los datos bancarios y tú haces la transferencia
   </p>
+  <UserDataTable
+    v-if="showUserData"
+    class="mt-6"
+    :user="props.user"
+  />
   <GenericButton
+    class="mt-16"
     type="secondary"
     full-width
     @click="goToHome"

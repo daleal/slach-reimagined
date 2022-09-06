@@ -17,7 +17,8 @@ const select = () => {
 <template>
   <label
     class="
-      relative flex flex-col bg-white p-5 rounded-lg shadow-md cursor-pointer
+      relative flex flex-col bg-white p-5 rounded-lg shadow-md
+      cursor-pointer select-none
       hover:bg-gray-700 hover:text-white text-gray-800
     "
     @click="select"
