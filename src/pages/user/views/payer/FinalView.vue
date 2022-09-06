@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue';
 import * as api from '@/api';
 import { useAmount } from '@/composables/amount';
+import { useAutomaticWidget } from '@/composables/automaticWidget';
 import { usePageContext } from '@/composables/pageContext';
 import { useFintocWidget } from '@/composables/fintocWidget';
 import GenericButton from '@/components/GenericButton.vue';
@@ -11,8 +12,9 @@ import type { User } from '@/types/user';
 
 const props = defineProps<{ user: User }>();
 
-const { pageContext } = usePageContext();
 const { amount } = useAmount();
+const { initiatePayment } = useAutomaticWidget();
+const { pageContext } = usePageContext();
 
 const showUserData = ref(false);
 
@@ -43,6 +45,10 @@ const pay = async () => {
 const goToHome = () => {
   window.location.href = '/';
 };
+
+if (initiatePayment.value) {
+  pay();
+}
 </script>
 
 <template>

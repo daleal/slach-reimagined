@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { isNumeric } from '@/utils/helpers';
 import { useAmount } from '@/composables/amount';
+import { useAutomaticWidget } from '@/composables/automaticWidget';
 import { usePageContext } from '@/composables/pageContext';
 import GenericContainer from '@/components/layout/GenericContainer.vue';
 import GenericFooter from '@/components/layout/GenericFooter.vue';
@@ -18,6 +19,7 @@ import type { StateType, SecondStateType } from '@/types/views/user';
 const props = defineProps<{ user: User }>();
 
 const { amount } = useAmount();
+const { initiatePayment } = useAutomaticWidget();
 const { pageContext } = usePageContext();
 
 const state = ref<StateType>('action-selection');
@@ -28,6 +30,7 @@ const moveToState = (newState: StateType) => {
 
 if (isNumeric(pageContext.routeParams.amount)) {
   amount.value = pageContext.routeParams.amount;
+  initiatePayment.value = true;
   moveToState('payer-final');
 }
 </script>
