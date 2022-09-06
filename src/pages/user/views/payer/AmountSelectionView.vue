@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useField } from 'vee-validate';
 import { useAmount } from '@/composables/amount';
 import { onlyNumbersFormatter } from '@/utils/formatters';
@@ -14,13 +14,12 @@ const props = defineProps<{ user: User }>();
 const emit = defineEmits<{ (e: 'continue'): void }>();
 
 const { amount: globalAmount } = useAmount();
-const { value: amount, errorMessage } = useField('amount', [
+const { value: amount, errorMessage, meta } = useField('amount', [
   validateNumeric('Ingresa un monto válido'),
   validatePositiveNumeric('Ingresa un monto válido'),
 ]);
 
 const written = ref(false);
-const error = computed(() => errorMessage.value !== undefined);
 
 const continueAction = () => {
   globalAmount.value = amount.value ? amount.value : null;
@@ -51,7 +50,7 @@ watch([amount], () => {
     :formatter="onlyNumbersFormatter"
   />
   <GenericButton
-    :disabled="!written || error"
+    :disabled="!written || !meta.valid"
     class="mb-16"
     full-width
     @click="continueAction"
