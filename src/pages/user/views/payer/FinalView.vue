@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import * as api from '@/api';
 import { useAmount } from '@/composables/amount';
+import { usePageContext } from '@/composables/pageContext';
+import { useFintocWidget } from '@/composables/fintocWidget';
 import GenericButton from '@/components/GenericButton.vue';
 import UserDataTable from '@/components/user-data/DataTable.vue';
 
@@ -8,6 +11,7 @@ import type { User } from '@/types/user';
 
 const props = defineProps<{ user: User }>();
 
+const { pageContext } = usePageContext();
 const { amount } = useAmount();
 
 const showUserData = ref(false);
@@ -21,6 +25,19 @@ const formattedAmount = computed(() => {
 
 const toggleUserData = () => {
   showUserData.value = !showUserData.value;
+};
+
+const pay = async () => {
+  if (amount.value !== null) {
+    const { widgetToken } = await api.paymentIntents.create(
+      pageContext.routeParams.alias,
+      Number(amount.value),
+    );
+    const widget = await useFintocWidget({
+      widgetToken,
+    });
+    widget?.open();
+  }
 };
 
 const goToHome = () => {
@@ -39,6 +56,7 @@ const goToHome = () => {
   <GenericButton
     class="mb-2 md:mb-4"
     full-width
+    @click="pay"
   >
     Pagar sin salir de Slach 📲
   </GenericButton>

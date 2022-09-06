@@ -1,8 +1,8 @@
-import axios, { AxiosRequestTransformer, AxiosResponseTransformer } from 'axios';
+import axios, { AxiosResponseTransformer } from 'axios';
 import humps from 'humps';
 import { API_HOST } from '@/constants';
 
-const { camelizeKeys, decamelizeKeys } = humps;
+const { camelizeKeys } = humps;
 
 export const client = axios.create({
   baseURL: API_HOST,
@@ -13,13 +13,4 @@ export const client = axios.create({
     ...(axios.defaults.transformResponse as AxiosResponseTransformer[]),
     (data) => camelizeKeys(data),
   ],
-  transformRequest: [
-    (data) => decamelizeKeys(data),
-    ...(axios.defaults.transformRequest as AxiosRequestTransformer[]),
-  ],
-});
-
-client.interceptors.request.use((config) => {
-  const { params, ...noParamsConfig } = config;
-  return { ...noParamsConfig, params: decamelizeKeys(params) };
 });
