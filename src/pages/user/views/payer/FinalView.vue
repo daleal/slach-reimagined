@@ -6,6 +6,7 @@ import { useAutomaticWidget } from '@/composables/automaticWidget';
 import { usePageContext } from '@/composables/pageContext';
 import { useFintocWidget } from '@/composables/fintocWidget';
 import GenericButton from '@/components/GenericButton.vue';
+import GenericSpinner from '@/components/GenericSpinner.vue';
 import UserDataTable from '@/components/user-data/DataTable.vue';
 
 import type { User } from '@/types/user';
@@ -16,6 +17,7 @@ const { amount } = useAmount();
 const { initiatePayment } = useAutomaticWidget();
 const { pageContext } = usePageContext();
 
+const paying = ref(false);
 const showUserData = ref(false);
 
 const formattedAmount = computed(() => {
@@ -31,14 +33,25 @@ const toggleUserData = () => {
 
 const pay = async () => {
   if (amount.value !== null) {
-    const { widgetToken } = await api.paymentIntents.create(
-      pageContext.routeParams.alias,
-      Number(amount.value),
-    );
-    const widget = await useFintocWidget({
-      widgetToken,
-    });
-    widget?.open();
+    paying.value = true;
+    try {
+      const { widgetToken } = await api.paymentIntents.create(
+        pageContext.routeParams.alias,
+        Number(amount.value),
+      );
+      const widget = await useFintocWidget({
+        widgetToken,
+        onSuccess: () => {
+          paying.value = false;
+        },
+        onExit: () => {
+          paying.value = false;
+        },
+      });
+      widget?.open();
+    } catch {
+      paying.value = false;
+    }
   }
 };
 
@@ -62,9 +75,16 @@ if (initiatePayment.value) {
   <GenericButton
     class="mb-2 md:mb-4"
     full-width
+    :disabled="paying"
     @click="pay"
   >
-    Pagar sin salir de Slach 📲
+    <span v-if="!paying">Pagar sin salir de Slach 📲</span>
+    <span class="w-full flex justify-center">
+      <GenericSpinner
+        v-if="paying"
+        class="h-6 w-6 text-indigo-100 fill-indigo-600"
+      />
+    </span>
   </GenericButton>
   <p class="text-center text-sm select-none text-gray-600 mb-10">
     Entra a tu cuenta del banco desde acá y transfiere en segundos
