@@ -12,6 +12,14 @@ const amountFragment = amount.value ? `/${amount.value}` : '';
 const url = computed(() => (
   `https://slach.cl/${pageContext.routeParams.alias}${amountFragment}`
 ));
+
+const share = () => {
+  if (navigator.share) {
+    navigator.share({
+      url: url.value,
+    });
+  }
+};
 </script>
 
 <template>
@@ -31,6 +39,9 @@ const url = computed(() => (
     Si no, envíale el siguiente link 👇
   </p>
   <p class="text-3xl font-semibold text-center text-indigo-500 break-words">
-    {{ url }}
+    <span
+      class="cursor-pointer"
+      @click="share"
+    >{{ url }}</span>
   </p>
 </template>
