@@ -1,5 +1,7 @@
+import { isNumeric } from '@/utils/helpers';
+
 export const validateNumeric = (errorMessage?: string) => (value: string) => {
-  if (/^\d+$/.test(value)) {
+  if (isNumeric(value)) {
     return true;
   }
   return errorMessage || 'A valid number is required';

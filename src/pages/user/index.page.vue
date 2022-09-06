@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { isNumeric } from '@/utils/helpers';
+import { useAmount } from '@/composables/amount';
+import { usePageContext } from '@/composables/pageContext';
 import GenericContainer from '@/components/layout/GenericContainer.vue';
 import GenericFooter from '@/components/layout/GenericFooter.vue';
 import ActionSelectionView from '@/pages/user/views/ActionSelectionView.vue';
@@ -14,11 +17,19 @@ import type { StateType, SecondStateType } from '@/types/views/user';
 
 const props = defineProps<{ user: User }>();
 
+const { amount } = useAmount();
+const { pageContext } = usePageContext();
+
 const state = ref<StateType>('action-selection');
 
 const moveToState = (newState: StateType) => {
   state.value = newState;
 };
+
+if (isNumeric(pageContext.routeParams.amount)) {
+  amount.value = pageContext.routeParams.amount;
+  moveToState('payer-final');
+}
 </script>
 
 <template>
