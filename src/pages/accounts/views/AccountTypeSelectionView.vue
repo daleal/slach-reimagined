@@ -3,7 +3,7 @@ import { ref, watch } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { useAccountInfo } from '@/composables/accountInfo';
 import GenericButton from '@/components/GenericButton.vue';
-import SquareSelector from '@/components/SquareSelector.vue';
+import LargeSelectableButton from '@/components/LargeSelectableButton.vue';
 
 const emit = defineEmits<{ (e: 'continue'): void }>();
 
@@ -30,9 +30,9 @@ watch([isIndividual], () => {
   </h1>
 
   <div class="grid sm:grid-cols-2 gap-8 mb-16">
-    <SquareSelector
+    <LargeSelectableButton
       :selected="isIndividual"
-      @select="() => selectOption(true)"
+      @click="() => selectOption(true)"
     >
       <template #icon>
         <FontAwesomeIcon :icon="[ 'fas', 'user' ]" />
@@ -43,10 +43,10 @@ watch([isIndividual], () => {
       <template #subtitle>
         Recibe pagos de tus amigos de forma fácil
       </template>
-    </SquareSelector>
-    <SquareSelector
+    </LargeSelectableButton>
+    <LargeSelectableButton
       :selected="!isIndividual"
-      @select="() => selectOption(false)"
+      @click="() => selectOption(false)"
     >
       <template #icon>
         <FontAwesomeIcon :icon="[ 'fas', 'store' ]" />
@@ -57,7 +57,7 @@ watch([isIndividual], () => {
       <template #subtitle>
         Recibe pagos en tu negocio con un link de pagos o un código QR
       </template>
-    </SquareSelector>
+    </LargeSelectableButton>
   </div>
   <div class="w-full flex justify-center">
     <GenericButton

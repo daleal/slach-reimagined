@@ -3,7 +3,7 @@ import { computed, toRef } from 'vue';
 import GenericSpinner from '@/components/GenericSpinner.vue';
 
 const props = withDefaults(defineProps<{
-  modelValue?: string,
+  modelValue: string,
   placeholder?: string,
   hint?: string,
   error?: string,

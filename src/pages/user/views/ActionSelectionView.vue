@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import GenericButton from '@/components/GenericButton.vue';
-import SquareSelector from '@/components/SquareSelector.vue';
+import LargeSelectableButton from '@/components/LargeSelectableButton.vue';
 
 import type { User } from '@/types/user';
 import type { SecondStateType } from '@/types/views/user';
@@ -34,9 +34,9 @@ const goToHome = () => {
     ¿Qué quieres hacer?
   </h1>
   <div class="grid sm:grid-cols-2 gap-8 mb-16">
-    <SquareSelector
+    <LargeSelectableButton
       :selected="optionSelected && isPayer"
-      @select="() => selectOption(true)"
+      @click="() => selectOption(true)"
     >
       <template #icon>
         <FontAwesomeIcon :icon="[ 'fas', 'user' ]" />
@@ -47,10 +47,10 @@ const goToHome = () => {
       <template #subtitle>
         Quiero pagarle a <span class="font-medium">{{ props.user.name }}</span>
       </template>
-    </SquareSelector>
-    <SquareSelector
+    </LargeSelectableButton>
+    <LargeSelectableButton
       :selected="optionSelected && !isPayer"
-      @select="() => selectOption(false)"
+      @click="() => selectOption(false)"
     >
       <template #icon>
         <FontAwesomeIcon :icon="[ 'fas', 'hand-holding-dollar' ]" />
@@ -62,7 +62,7 @@ const goToHome = () => {
         Soy <span class="font-medium">{{ props.user.name }}</span>
         y quiero que me paguen
       </template>
-    </SquareSelector>
+    </LargeSelectableButton>
   </div>
   <GenericButton
     :disabled="!optionSelected"

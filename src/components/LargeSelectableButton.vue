@@ -5,11 +5,11 @@ const props = withDefaults(defineProps<{
   selected: false,
 });
 
-const emit = defineEmits<{ (e: 'select'): void }>();
+const emit = defineEmits<{ (e: 'click'): void }>();
 
-const select = () => {
+const click = () => {
   if (!props.selected) {
-    emit('select');
+    emit('click');
   }
 };
 </script>
@@ -21,7 +21,7 @@ const select = () => {
       cursor-pointer select-none
       hover:bg-gray-700 hover:text-white text-gray-800
     "
-    @click="select"
+    @click="click"
   >
     <span class="text-center text-2xl mb-3">
       <slot name="icon" />

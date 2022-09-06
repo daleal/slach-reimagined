@@ -1,3 +1,4 @@
+import { rutValidate } from 'rut-helpers';
 import * as api from '@/api';
 import { isNumeric } from '@/utils/helpers';
 
@@ -58,4 +59,11 @@ export const validateUnusedAlias = (errorMessage?: string) => async (value: stri
   } catch {
     return true;
   }
+};
+
+export const validateRut = (errorMessage?: string) => async (value: string) => {
+  if (rutValidate(value)) {
+    return true;
+  }
+  return errorMessage || 'This field needs a valid DNI';
 };
