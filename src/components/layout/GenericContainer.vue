@@ -1,5 +1,5 @@
 <template>
-  <div class="w-screen h-screen flex flex-col justify-between">
+  <div class="w-screen h-screen overflow-x-hidden flex flex-col justify-between">
     <div
       v-bind="$attrs"
       class="container max-w-md mx-auto py-12 px-2 md:px-0"

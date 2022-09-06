@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { rutFormat } from 'rut-helpers';
 import { accountTypes } from '@/utils/accountTypes';
 import { banks } from '@/utils/banks';
@@ -20,6 +21,15 @@ const humanizeAccountType = (accountTypeId: typeof accountTypes[number]['id']) =
   );
   return accountType === undefined ? '' : accountType.name;
 };
+
+const allData = computed(() => (
+  `Nombre: ${props.user.name}\n`
+  + `Rut: ${props.user.rut}\n`
+  + `Banco: ${humanizeBank(props.user.bank)}\n`
+  + `Tipo de cuenta: ${humanizeAccountType(props.user.accountType)}\n`
+  + `Número de cuenta: ${props.user.accountNumber}\n`
+  + `Email: ${props.user.email}`
+));
 </script>
 
 <template>
@@ -56,7 +66,10 @@ const humanizeAccountType = (accountTypeId: typeof accountTypes[number]['id']) =
       />
     </div>
     <div class="w-full flex justify-center mt-6">
-      <CopyButton text="Copiar todos los datos" />
+      <CopyButton
+        text="Copiar todos los datos"
+        :copy="allData"
+      />
     </div>
   </div>
 </template>

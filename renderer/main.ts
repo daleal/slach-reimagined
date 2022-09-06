@@ -1,7 +1,9 @@
 import { createSSRApp, defineComponent, h } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { faCopy, faHandHoldingDollar, faUser } from '@fortawesome/free-solid-svg-icons';
+import {
+  faClipboardCheck, faCopy, faHandHoldingDollar, faUser,
+} from '@fortawesome/free-solid-svg-icons';
 import { setPageContext } from '../src/composables/pageContext';
 
 import type { PageContext } from '../src/types/renderer/page';
@@ -12,7 +14,7 @@ import '../src/assets/styles/main.css';
 export const createApp = (pageContext: PageContext) => {
   const { Page, pageProps } = pageContext;
 
-  library.add(faCopy, faHandHoldingDollar, faTwitter, faUser);
+  library.add(faClipboardCheck, faCopy, faHandHoldingDollar, faTwitter, faUser);
 
   const ApplicationComponent = defineComponent({
     render() {

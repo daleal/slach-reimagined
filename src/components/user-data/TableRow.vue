@@ -18,7 +18,10 @@ const props = defineProps<{
       </div>
     </div>
     <div class="mr-6 my-4 inline-block">
-      <CopyButton text="Copiar" />
+      <CopyButton
+        text="Copiar"
+        :copy="props.value"
+      />
     </div>
   </div>
 </template>
