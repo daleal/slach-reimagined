@@ -68,7 +68,7 @@ const goToHome = () => {
     full-width
     @click="toggleUserData"
   >
-    Ver datos para pagar manualmente 🏦
+    {{ showUserData ? 'Ocultar datos' : 'Ver datos para pagar manualmente 🏦' }}
   </GenericButton>
   <p
     v-if="!showUserData"
