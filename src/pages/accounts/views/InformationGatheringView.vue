@@ -3,8 +3,11 @@ import { computed, ref, watch } from 'vue';
 import { useField } from 'vee-validate';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { useAccountInfo } from '@/composables/accountInfo';
-import { rutFormatter } from '@/utils/formatters';
-import { validateNonEmpty, validateRut } from '@/utils/validations';
+import * as oracle from '@/services/oracle';
+import { rutFormatter, onlyNumbersFormatter } from '@/utils/formatters';
+import {
+  validateNonEmpty, validateRut, validateNumeric, validatePositiveNumeric,
+} from '@/utils/validations';
 import GenericButton from '@/components/GenericButton.vue';
 import GenericInput from '@/components/GenericInput.vue';
 import LargeSelectableButton from '@/components/LargeSelectableButton.vue';
@@ -14,7 +17,7 @@ const emit = defineEmits<{
     (e: 'go-back'): void,
   }>();
 
-const { rut } = useAccountInfo();
+const { rut, accountNumber, name } = useAccountInfo();
 
 const {
   value: rutFieldValue,
@@ -28,7 +31,22 @@ const {
   validateOnMount: rut.value !== '',
 });
 const rutWritten = ref(rut.value !== '');
-const rutValid = computed(() => rutWritten.value && !rutFieldMeta.pending && rutFieldMeta.valid);
+const rutValid = computed(() => rutWritten.value && rutFieldMeta.valid);
+const fetchingName = ref(false);
+
+const {
+  value: accountNumberValue,
+  errorMessage: accountNumberErrorMessage,
+  meta: accountNumberMeta,
+} = useField('account-number', [
+  validateNumeric('Ingresa un número de cuenta válido 👮🏽‍♀'),
+  validatePositiveNumeric('Ingresa un número de cuenta válido 👮🏽‍♀'),
+], {
+  initialValue: rut.value,
+  validateOnMount: rut.value !== '',
+});
+const accountNumberWritten = ref(accountNumber.value !== '');
+const accountNumberValid = computed(() => accountNumberWritten.value && accountNumberMeta.valid);
 
 const continueAction = () => {
   emit('continue');
@@ -41,6 +59,23 @@ const back = () => {
 watch([rutFieldValue], () => {
   rutWritten.value = true;
   rut.value = rutFieldValue.value;
+});
+
+watch([rutValid], async () => {
+  if (rutValid.value) {
+    fetchingName.value = true;
+    try {
+      const entity = await oracle.queryByRut(rutFieldValue.value);
+      name.value = entity.name;
+    } catch {} finally { // eslint-disable-line no-empty
+      fetchingName.value = false;
+    }
+  }
+});
+
+watch([accountNumberValue], () => {
+  accountNumberWritten.value = true;
+  accountNumber.value = accountNumberValue.value;
 });
 </script>
 
@@ -67,16 +102,24 @@ watch([rutFieldValue], () => {
 
   <GenericInput
     v-model="rutFieldValue"
-    class="mb-16"
+    class="mb-4"
     placeholder="RUT"
     :error="rutFieldErrorMessage"
-    :loading="rutFieldMeta.pending"
+    :loading="fetchingName"
     :formatter="rutFormatter"
+  />
+
+  <GenericInput
+    v-model="accountNumberValue"
+    class="mb-16"
+    placeholder="Número de cuenta"
+    :error="accountNumberErrorMessage"
+    :formatter="onlyNumbersFormatter"
   />
 
   <div class="w-full flex justify-center mb-6">
     <GenericButton
-      :disabled="!rutValid"
+      :disabled="!rutValid || !accountNumberValid || fetchingName"
       @click="continueAction"
     >
       Continuar
