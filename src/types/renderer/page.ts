@@ -2,7 +2,7 @@ import type { PageContextBuiltIn } from 'vite-plugin-ssr';
 
 export type PageContext = {
   Page: object
-  pageProps?: Record<string, unknown>
   urlPathname: string
+  pageProps?: Record<string, unknown>
   redirectTo?: string
 } & PageContextBuiltIn;

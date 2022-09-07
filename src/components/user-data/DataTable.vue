@@ -1,22 +1,24 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { rutFormat } from 'rut-helpers';
-import { accountTypes } from '@/utils/accountTypes';
+import { bankAccountTypes } from '@/utils/bankAccountTypes';
 import { banks } from '@/utils/banks';
 import CopyButton from '@/components/CopyButton.vue';
 import TableRow from '@/components/user-data/TableRow.vue';
 
 import type { User } from '@/types/user';
+import type { BankAccountType } from '@/utils/bankAccountTypes';
+import type { Bank } from '@/utils/banks';
 
 const props = defineProps<{ user: User }>();
 
-const humanizeBank = (bankId: typeof banks[number]['id']) => {
+const humanizeBank = (bankId: Bank['id']) => {
   const bank = banks.find((internalBank) => internalBank.id === bankId);
   return bank === undefined ? '' : bank.name;
 };
 
-const humanizeAccountType = (accountTypeId: typeof accountTypes[number]['id']) => {
-  const accountType = accountTypes.find(
+const humanizeAccountType = (accountTypeId: BankAccountType['id']) => {
+  const accountType = bankAccountTypes.find(
     (internalAccountType) => internalAccountType.id === accountTypeId,
   );
   return accountType === undefined ? '' : accountType.name;

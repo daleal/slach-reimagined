@@ -1,7 +1,7 @@
 const CHECKING_ACCOUNT = 'checking_account';
 const SIGHT_ACCOUNT = 'sight_account';
 
-export const accountTypes = [
+export const bankAccountTypes = [
   {
     id: CHECKING_ACCOUNT,
     name: 'Cuenta Corriente',
@@ -11,3 +11,5 @@ export const accountTypes = [
     name: 'Cuenta Vista',
   },
 ] as const;
+
+export type BankAccountType = typeof bankAccountTypes[number];

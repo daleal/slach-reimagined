@@ -4,20 +4,25 @@ import { useField } from 'vee-validate';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { useAccountInfo } from '@/composables/accountInfo';
 import * as oracle from '@/services/oracle';
+import { bankAccountTypes } from '@/utils/bankAccountTypes';
+import { banks } from '@/utils/banks';
 import { rutFormatter, onlyNumbersFormatter } from '@/utils/formatters';
 import {
   validateNonEmpty, validateRut, validateNumeric, validatePositiveNumeric,
 } from '@/utils/validations';
 import GenericButton from '@/components/GenericButton.vue';
 import GenericInput from '@/components/GenericInput.vue';
+import GenericDropDown from '@/components/GenericDropDown.vue';
 import LargeSelectableButton from '@/components/LargeSelectableButton.vue';
 
 const emit = defineEmits<{
-    (e: 'continue'): void,
-    (e: 'go-back'): void,
-  }>();
+  (e: 'continue'): void,
+  (e: 'go-back'): void,
+}>();
 
-const { rut, accountNumber, name } = useAccountInfo();
+const {
+  rut, bankAccountNumber, bankName, bankAccountType, name,
+} = useAccountInfo();
 
 const {
   value: rutFieldValue,
@@ -45,7 +50,7 @@ const {
   initialValue: rut.value,
   validateOnMount: rut.value !== '',
 });
-const accountNumberWritten = ref(accountNumber.value !== '');
+const accountNumberWritten = ref(bankAccountNumber.value !== '');
 const accountNumberValid = computed(() => accountNumberWritten.value && accountNumberMeta.valid);
 
 const continueAction = () => {
@@ -75,7 +80,7 @@ watch([rutValid], async () => {
 
 watch([accountNumberValue], () => {
   accountNumberWritten.value = true;
-  accountNumber.value = accountNumberValue.value;
+  bankAccountNumber.value = accountNumberValue.value;
 });
 </script>
 
@@ -109,9 +114,25 @@ watch([accountNumberValue], () => {
     :formatter="rutFormatter"
   />
 
+  <GenericDropDown
+    v-model="bankName"
+    class="mb-12"
+    label="Banco"
+    :options="banks.map((bank) => bank.name)"
+    full-width
+  />
+
+  <GenericDropDown
+    v-model="bankAccountType"
+    class="mb-12"
+    label="Tipo de cuenta"
+    :options="bankAccountTypes.map((accountType) => accountType.name)"
+    full-width
+  />
+
   <GenericInput
     v-model="accountNumberValue"
-    class="mb-16"
+    class="mb-4"
     placeholder="Número de cuenta"
     :error="accountNumberErrorMessage"
     :formatter="onlyNumbersFormatter"
@@ -119,7 +140,7 @@ watch([accountNumberValue], () => {
 
   <div class="w-full flex justify-center mb-6">
     <GenericButton
-      :disabled="!rutValid || !accountNumberValid || fetchingName"
+      :disabled="!rutValid || !accountNumberValid || !bankName || !bankAccountType || fetchingName"
       @click="continueAction"
     >
       Continuar

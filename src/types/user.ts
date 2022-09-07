@@ -1,12 +1,12 @@
-import { accountTypes } from '@/utils/accountTypes';
-import { banks } from '@/utils/banks';
+import type { BankAccountType } from '@/utils/bankAccountTypes';
+import type { Bank } from '@/utils/banks';
 
 export interface User {
   email: string,
   name: string,
   rut: string,
-  bank: typeof banks[number]['id'],
+  bank: Bank['id'],
   accountNumber: number,
-  accountType: typeof accountTypes[number]['id'],
+  accountType: BankAccountType['id'],
   confirmed: boolean,
 }

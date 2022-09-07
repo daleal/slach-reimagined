@@ -56,3 +56,5 @@ export const banks = [
     name: 'Tenpo',
   },
 ] as const;
+
+export type Bank = typeof banks[number];
