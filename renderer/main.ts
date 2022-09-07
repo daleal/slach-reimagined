@@ -2,7 +2,14 @@ import { createSSRApp, defineComponent, h } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import {
-  faBolt, faChevronDown, faClipboardCheck, faCopy, faHandHoldingDollar, faStore, faUser,
+  faBolt,
+  faChevronDown,
+  faClipboardCheck,
+  faCopy,
+  faHandHoldingDollar,
+  faPaperPlane,
+  faStore,
+  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { setPageContext } from '../src/composables/pageContext';
 
@@ -20,6 +27,7 @@ export const createApp = (pageContext: PageContext) => {
     faClipboardCheck,
     faCopy,
     faHandHoldingDollar,
+    faPaperPlane,
     faStore,
     faTwitter,
     faUser,

@@ -61,9 +61,20 @@ export const validateUnusedAlias = (errorMessage?: string) => async (value: stri
   }
 };
 
-export const validateRut = (errorMessage?: string) => async (value: string) => {
+export const validateRut = (errorMessage?: string) => (value: string) => {
   if (rutValidate(value)) {
     return true;
   }
   return errorMessage || 'This field needs a valid DNI';
+};
+
+export const validateEmail = (errorMessage?: string) => (email: string) => {
+  if (
+    email.toLowerCase().match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    )
+  ) {
+    return true;
+  }
+  return errorMessage || 'This field needs a valid email';
 };

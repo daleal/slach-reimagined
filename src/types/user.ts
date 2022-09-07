@@ -10,3 +10,13 @@ export interface User {
   accountType: BankAccountType['id'],
   confirmed: boolean,
 }
+
+export interface UserCreation {
+  alias: string,
+  rut: string,
+  email: string,
+  bank: string,
+  accountType: string,
+  accountNumber: string,
+  isBusiness: boolean,
+}

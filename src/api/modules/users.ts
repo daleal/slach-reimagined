@@ -1,5 +1,6 @@
 import { client } from '@/api/client';
-import type { User } from '@/types/user';
+
+import type { User, UserCreation } from '@/types/user';
 
 const BASE_PATH = '/api/v1/users';
 
@@ -8,7 +9,4 @@ export const get = async (alias: string) => {
   return response.data.data;
 };
 
-export const create = async (data: unknown) => {
-  const response = await client.post(BASE_PATH, data);
-  return response.data;
-};
+export const create = (data: UserCreation) => client.post(BASE_PATH, data);
