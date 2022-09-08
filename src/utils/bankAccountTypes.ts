@@ -12,4 +12,6 @@ export const bankAccountTypes = [
   },
 ] as const;
 
+export const bankAccountTypeIds = bankAccountTypes.map((accountType) => accountType.id);
+
 export type BankAccountType = typeof bankAccountTypes[number];

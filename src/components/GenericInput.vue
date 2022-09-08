@@ -7,10 +7,12 @@ const props = withDefaults(defineProps<{
   placeholder?: string,
   hint?: string,
   error?: string,
-  loading?: boolean
+  loading?: boolean,
+  disabled?: boolean,
   formatter?: (value: string) => string,
 }>(), {
   loading: false,
+  disabled: false,
   formatter: (value: string) => value,
 });
 
@@ -48,9 +50,11 @@ const updateInput = (event: Event) => {
         focus:outline-none w-full border-2 rounded-md px-4 py-3
         leading-tight text-gray-900 placeholder-gray-400
         ${inputColorClasses} ${ !loading && !renderSubText ? 'mb-6' : '' }
+        disabled:bg-gray-50 disabled:text-gray-500 disabled:border-gray-200 disabled:shadow-none
       `"
       :placeholder="placeholder"
       :value="value"
+      :disabled="disabled"
       @input="updateInput"
     >
     <GenericSpinner

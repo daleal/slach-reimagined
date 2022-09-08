@@ -5,6 +5,7 @@ import { bankAccountTypes } from '@/utils/bankAccountTypes';
 
 import type { Bank } from '@/utils/banks';
 import type { BankAccountType } from '@/utils/bankAccountTypes';
+import type { FintocAccount } from '@/types/fintoc';
 import type { Nullable } from '@/types/utils';
 
 const accountType = ref<'individual' | 'business'>('individual');
@@ -17,6 +18,8 @@ const email = ref('');
 
 // Inferred
 const name = ref('');
+const accounts = ref<Array<FintocAccount>>([]);
+const selectedAccountIndex = ref(0);
 
 // Methods
 const getNormalizedData = () => ({
@@ -42,5 +45,7 @@ export const useAccountInfo = () => ({
   rut,
   email,
   name,
+  accounts,
+  selectedAccountIndex,
   getNormalizedData,
 });

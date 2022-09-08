@@ -4,21 +4,28 @@ import { FINTOC_PUBLIC_KEY } from '@/constants';
 const fintocPromise = getFintoc();
 
 export const useFintocWidget = async ({
-  widgetToken,
+  product,
+  holderType,
+  widgetToken = undefined,
+  webhookUrl = undefined,
   onSuccess = () => null,
   onExit = () => null,
 }: {
-  widgetToken: string,
+  product: 'payments' | 'movements',
+  holderType: 'individual' | 'business',
+  widgetToken?: string,
+  webhookUrl?: string,
   onSuccess?: () => void,
   onExit?: () => void,
 }) => {
   const fintoc = await fintocPromise;
 
   return fintoc?.create({
-    widgetToken,
     publicKey: FINTOC_PUBLIC_KEY,
-    holderType: 'individual',
-    product: 'payments',
+    holderType,
+    widgetToken,
+    webhookUrl,
+    product,
     onSuccess,
     onExit,
   }) || null;

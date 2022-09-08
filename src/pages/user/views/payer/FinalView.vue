@@ -40,6 +40,8 @@ const pay = async () => {
         Number(amount.value),
       );
       const widget = await useFintocWidget({
+        product: 'payments',
+        holderType: 'individual',
         widgetToken,
         onSuccess: () => {
           paying.value = false;

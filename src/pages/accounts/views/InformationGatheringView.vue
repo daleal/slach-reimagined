@@ -17,6 +17,7 @@ import LargeSelectableButton from '@/components/LargeSelectableButton.vue';
 
 const emit = defineEmits<{
   (e: 'continue'): void,
+  (e: 'use-fintoc-onboarding'): void,
   (e: 'go-back'): void,
 }>();
 
@@ -52,6 +53,10 @@ const {
 });
 const accountNumberWritten = ref(bankAccountNumber.value !== '');
 const accountNumberValid = computed(() => accountNumberWritten.value && accountNumberMeta.valid);
+
+const fintocAction = () => {
+  emit('use-fintoc-onboarding');
+};
 
 const continueAction = () => {
   emit('continue');
@@ -93,7 +98,10 @@ watch([accountNumberValue], () => {
     Los pagos llegarán directamente a la cuenta que registres acá
   </h3>
 
-  <LargeSelectableButton class="mb-16">
+  <LargeSelectableButton
+    class="mb-16"
+    @click="fintocAction"
+  >
     <template #icon>
       <FontAwesomeIcon :icon="[ 'fas', 'bolt' ]" />
     </template>
