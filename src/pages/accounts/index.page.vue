@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useHead } from '@vueuse/head';
 import * as api from '@/api';
 import { useAccountInfo } from '@/composables/accountInfo';
 import { useFintocWidget } from '@/composables/fintocWidget';
 import { useSession } from '@/composables/session';
 import { banks } from '@/utils/banks';
 import { bankAccountTypeIds } from '@/utils/bankAccountTypes';
+import { scaffoldHead } from '@/utils/head';
 import { API_HOST } from '@/constants';
 import GenericContainer from '@/components/layout/GenericContainer.vue';
 import FrequentlyAskedQuestions from '@/components/FrequentlyAskedQuestions.vue';
@@ -17,6 +19,10 @@ import ConfirmationView from '@/pages/accounts/views/ConfirmationView.vue';
 import VerifyEmailView from '@/pages/accounts/views/VerifyEmailView.vue';
 
 import type { StateType } from '@/types/views/accounts';
+
+useHead(scaffoldHead({
+  description: 'Crea tu usuario de Slach y recibe transferencias',
+}));
 
 const {
   accountType, rut, bankName, name, accounts, getNormalizedData,

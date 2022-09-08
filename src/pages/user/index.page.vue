@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useHead } from '@vueuse/head';
 import { isNumeric } from '@/utils/helpers';
 import { useAmount } from '@/composables/amount';
 import { useAutomaticWidget } from '@/composables/automaticWidget';
 import { usePageContext } from '@/composables/pageContext';
+import { scaffoldHead } from '@/utils/head';
 import GenericContainer from '@/components/layout/GenericContainer.vue';
 import GenericFooter from '@/components/layout/GenericFooter.vue';
 import ActionSelectionView from '@/pages/user/views/ActionSelectionView.vue';
@@ -22,6 +24,17 @@ const props = defineProps<{ user: User }>();
 const { amount } = useAmount();
 const { initiatePayment } = useAutomaticWidget();
 const { pageContext } = usePageContext();
+
+const descriptionAmountString = amount.value ? ` ${amount.value} ` : ' ';
+
+useHead(scaffoldHead({
+  title: `Fintoc | ${props.user.name}`,
+  description: (
+    props.user.confirmed
+      ? `Le vas a pagar${descriptionAmountString}a ${props.user.name}`
+      : `Slach de ${props.user.name}`
+  ),
+}));
 
 const state = ref<StateType>('action-selection');
 

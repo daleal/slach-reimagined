@@ -1,27 +1,37 @@
 import { renderToString } from '@vue/server-renderer';
-import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr';
+import { dangerouslySkipEscape } from 'vite-plugin-ssr';
 import { createHead, renderHeadToString } from '@vueuse/head';
+import { scaffoldHead } from '../src/utils/head';
 
 import { createApp } from './main';
 import type { PageContext } from '../src/types/renderer/page';
 
 export const passToClient = ['pageProps', 'urlPathname', 'routeParams'];
 
+const { title, meta } = scaffoldHead({
+  title: 'Slach',
+  description: 'Recibe pagos por transferencia',
+});
+
 const defaultHead = {
-  title: 'Slach | Recibe pagos por transferencia',
+  title,
   link: [
     {
       rel: 'icon',
-      type: 'image/svg+xml',
-      href: '/vite.svg',
+      type: 'image/png',
+      href: '/favicon.png',
     },
   ],
   meta: [
+    ...meta,
     { charset: 'utf-8' },
     {
       name: 'viewport',
       content: 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0',
     },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:url', content: 'https://slach.cl' },
+    { property: 'twitter:url', content: 'https://slach.cl' },
   ],
 };
 
@@ -45,16 +55,18 @@ export const render = async (pageContext: PageContext) => {
     headTags, htmlAttrs, bodyAttrs, bodyTags,
   } = renderHeadToString(head);
 
-  const documentHtml = escapeInject`<!DOCTYPE html>
-    <html${dangerouslySkipEscape(htmlAttrs)}>
+  const documentHtml = dangerouslySkipEscape(`
+    <!DOCTYPE html>
+    <html${htmlAttrs}>
       <head>
-        ${dangerouslySkipEscape(headTags)}
+        ${headTags}
       </head>
-      <body${dangerouslySkipEscape(bodyAttrs)}>
-        <div id="app">${dangerouslySkipEscape(appHtml)}</div>
-        ${dangerouslySkipEscape(bodyTags)}
+      <body${bodyAttrs}>
+        <div id="app">${appHtml}</div>
+        ${bodyTags}
       </body>
-    </html>`;
+    </html>
+  `);
 
   return {
     documentHtml,
