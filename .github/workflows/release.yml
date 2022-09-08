@@ -1,0 +1,24 @@
+name: release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-22.04
+    env:
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Log in to Heroku Container Registry
+        run: heroku container:login
+
+      - name: Build and push
+        run: heroku container:push --app ${{ secrets.HEROKU_APP_NAME }} web --arg VITE_API_HOST=${{ secrets.API_HOST }},VITE_ORACLE_HOST=${{ secrets.ORACLE_HOST }},VITE_FINTOC_PUBLIC_KEY=${{ secrets.FINTOC_PUBLIC_KEY }}
+
+      - name: Release the image
+        run: heroku container:release --app ${{ secrets.HEROKU_APP_NAME }} web
