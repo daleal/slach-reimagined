@@ -1,0 +1,20 @@
+# Exclude: everything
+*
+
+# Include: application files
+!public
+!renderer
+!server
+!src
+!index.html
+
+# Include: config files
+!postcss.config.cjs
+!tailwind.config.cjs
+!tsconfig.json
+!tsconfig.node.json
+!vite.config.ts
+
+# Include: dependency files
+!package-lock.json
+!package.json
