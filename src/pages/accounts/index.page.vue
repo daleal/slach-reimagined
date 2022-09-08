@@ -36,21 +36,21 @@ const createAccount = async () => {
   <GenericContainer>
     <template #body>
       <AccountTypeSelectionView
-        v-if="false && state === 'account-type-selection'"
+        v-if="state === 'account-type-selection'"
         @continue="() => moveToState('alias-selection')"
       />
       <AliasSelectionView
-        v-else-if="false && state === 'alias-selection'"
+        v-else-if="state === 'alias-selection'"
         @continue="() => moveToState('information-gathering')"
         @go-back="() => moveToState('account-type-selection')"
       />
       <InformationGatheringView
-        v-else-if="false && state === 'information-gathering'"
+        v-else-if="state === 'information-gathering'"
         @continue="() => moveToState('confirmation')"
         @go-back="() => moveToState('alias-selection')"
       />
       <ConfirmationView
-        v-else-if="true || state === 'confirmation'"
+        v-else-if="state === 'confirmation'"
         @continue="createAccount"
         @go-back="() => moveToState('information-gathering')"
       />

@@ -72,7 +72,10 @@ watch([possibleAlias], () => {
   </div>
   <div class="w-full flex justify-center">
     <span
-      class="cursor-pointer text-indigo-500 hover:text-indigo-700 hover:underline"
+      class="
+        cursor-pointer select-none text-indigo-500
+        hover:text-indigo-700 hover:underline
+      "
       @click="back"
     >
       atrás

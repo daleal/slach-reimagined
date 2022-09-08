@@ -6,13 +6,16 @@ import { useAccountInfo } from '@/composables/accountInfo';
 import { validateNonEmpty, validateEmail } from '@/utils/validations';
 import GenericButton from '@/components/GenericButton.vue';
 import GenericInput from '@/components/GenericInput.vue';
+import UserDataConfirmationTable from '@/components/UserDataConfirmationTable.vue';
 
 const emit = defineEmits<{
   (e: 'continue'): void,
   (e: 'go-back'): void,
 }>();
 
-const { email } = useAccountInfo();
+const {
+  alias, email, name, bankName, bankAccountType, bankAccountNumber,
+} = useAccountInfo();
 const { value: possibleEmail, errorMessage, meta } = useField('email', [
   validateNonEmpty('Este campo es obligatorio'),
   validateEmail('Ingresa un email válido 👮🏽‍♀'),
@@ -23,8 +26,6 @@ const { value: possibleEmail, errorMessage, meta } = useField('email', [
 
 const written = ref(email.value !== '');
 const valid = computed(() => written.value && meta.valid);
-
-const alias = ref('some-alias');
 
 const continueAction = () => {
   emit('continue');
@@ -49,9 +50,13 @@ watch([possibleEmail], () => {
     Revisa que los datos sean los correctos y luego confirma tu email para validar tu cuenta
   </h3>
 
-  <div class="mb-16">
-    TABLA
-  </div>
+  <UserDataConfirmationTable
+    class="mb-16"
+    :name="name"
+    :bank-name="bankName!"
+    :account-type="bankAccountType!"
+    :account-number="bankAccountNumber"
+  />
 
   <h2 class="text-2xl text-center mb-2">
     Tu usuario será: <span class="text-indigo-600 font-bold">{{ alias }}</span>
@@ -83,7 +88,10 @@ watch([possibleEmail], () => {
   </div>
   <div class="w-full flex justify-center">
     <span
-      class="cursor-pointer text-indigo-500 hover:text-indigo-700 hover:underline"
+      class="
+        cursor-pointer select-none text-indigo-500
+        hover:text-indigo-700 hover:underline
+      "
       @click="back"
     >
       atrás

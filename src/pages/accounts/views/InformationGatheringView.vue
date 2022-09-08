@@ -47,8 +47,8 @@ const {
   validateNumeric('Ingresa un número de cuenta válido 👮🏽‍♀'),
   validatePositiveNumeric('Ingresa un número de cuenta válido 👮🏽‍♀'),
 ], {
-  initialValue: rut.value,
-  validateOnMount: rut.value !== '',
+  initialValue: bankAccountNumber.value,
+  validateOnMount: bankAccountNumber.value !== '',
 });
 const accountNumberWritten = ref(bankAccountNumber.value !== '');
 const accountNumberValid = computed(() => accountNumberWritten.value && accountNumberMeta.valid);
@@ -148,7 +148,10 @@ watch([accountNumberValue], () => {
   </div>
   <div class="w-full flex justify-center">
     <span
-      class="cursor-pointer text-indigo-500 hover:text-indigo-700 hover:underline"
+      class="
+        cursor-pointer select-none text-indigo-500
+        hover:text-indigo-700 hover:underline
+      "
       @click="back"
     >
       atrás
