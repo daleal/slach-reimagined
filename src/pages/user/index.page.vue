@@ -15,6 +15,7 @@ import PayerFinalView from '@/pages/user/views/payer/FinalView.vue';
 import type { User } from '@/types/user';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { StateType, SecondStateType } from '@/types/views/user';
+import PendingConfirmationView from './views/PendingConfirmationView.vue';
 
 const props = defineProps<{ user: User }>();
 
@@ -38,8 +39,9 @@ if (isNumeric(pageContext.routeParams.amount)) {
 <template>
   <GenericContainer>
     <template #body>
+      <PendingConfirmationView v-if="!props.user.confirmed" />
       <ActionSelectionView
-        v-if="state === 'action-selection'"
+        v-else-if="state === 'action-selection'"
         :user="props.user"
         @continue="(newState: SecondStateType) => moveToState(newState)"
       />
