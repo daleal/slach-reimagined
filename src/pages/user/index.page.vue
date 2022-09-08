@@ -28,7 +28,7 @@ const { pageContext } = usePageContext();
 const descriptionAmountString = amount.value ? ` ${amount.value} ` : ' ';
 
 useHead(scaffoldHead({
-  title: `Fintoc | ${props.user.name}`,
+  title: `Slach | ${props.user.name}`,
   description: (
     props.user.confirmed
       ? `Le vas a pagar${descriptionAmountString}a ${props.user.name}`
